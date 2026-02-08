@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caring Owls — Protecting Your Loved Ones from Phone Scams</title>
+    <meta name="description" content="Caring Owls filters calls and texts for elderly family members with cognitive decline, blocking scammers while keeping loved ones connected.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --amber-50: #fffbeb;
+            --amber-100: #fef3c7;
+            --amber-200: #fde68a;
+            --amber-600: #d97706;
+            --amber-700: #b45309;
+            --amber-800: #92400e;
+            --stone-50: #fafaf9;
+            --stone-100: #f5f5f4;
+            --stone-200: #e7e5e4;
+            --stone-400: #a8a29e;
+            --stone-500: #78716c;
+            --stone-600: #57534e;
+            --stone-700: #44403c;
+            --stone-800: #292524;
+            --stone-900: #1c1917;
+            --teal-600: #0d9488;
+            --teal-700: #0f766e;
+            --white: #ffffff;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            color: var(--stone-800);
+            background: var(--stone-50);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--stone-800);
+        }
+        .nav-logo svg { width: 36px; height: 36px; }
+        .nav-logo span {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            letter-spacing: -0.01em;
+        }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--stone-600);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--stone-900); }
+
+        /* HERO */
+        .hero {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem 4rem;
+            text-align: center;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--amber-100);
+            color: var(--amber-800);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 100px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            margin-bottom: 1.75rem;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 5vw, 3.4rem);
+            line-height: 1.15;
+            color: var(--stone-900);
+            max-width: 750px;
+            margin: 0 auto 1.5rem;
+            letter-spacing: -0.02em;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--stone-600);
+            max-width: 580px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+        .hero-cta {
+            display: inline-block;
+            background: var(--amber-700);
+            color: var(--white);
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .hero-cta:hover { background: var(--amber-800); transform: translateY(-1px); }
+
+        /* PROBLEM SECTION */
+        .problem {
+            background: var(--white);
+            border-top: 1px solid var(--stone-200);
+            border-bottom: 1px solid var(--stone-200);
+        }
+        .problem-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .problem-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .problem-inner > p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            max-width: 620px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+        .stat-card {
+            background: var(--stone-50);
+            border: 1px solid var(--stone-200);
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+        .stat-card .number {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--amber-700);
+            margin-bottom: 0.35rem;
+        }
+        .stat-card .label {
+            color: var(--stone-600);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        /* HOW IT WORKS */
+        .how {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .how h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+        .how > p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        .step {
+            position: relative;
+            padding: 2rem;
+            border-radius: 12px;
+            background: var(--white);
+            border: 1px solid var(--stone-200);
+        }
+        .step-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--amber-100);
+            color: var(--amber-800);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 1.25rem;
+        }
+        .step h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--stone-900);
+            margin-bottom: 0.5rem;
+        }
+        .step p {
+            color: var(--stone-500);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* FEATURES */
+        .features {
+            background: var(--stone-900);
+            color: var(--white);
+        }
+        .features-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .features-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+        .features-inner > p {
+            color: var(--stone-400);
+            font-size: 1.05rem;
+            max-width: 540px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .feature-card {
+            background: var(--stone-800);
+            border: 1px solid var(--stone-700);
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+        .feature-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            background: rgba(251, 191, 36, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.25rem;
+            font-size: 1.3rem;
+        }
+        .feature-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card p {
+            color: var(--stone-400);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* FOR FAMILIES */
+        .families {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .families h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+        .families > p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        .family-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        .family-card {
+            padding: 1.75rem;
+            border-radius: 12px;
+            background: var(--amber-50);
+            border: 1px solid var(--amber-200);
+        }
+        .family-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--stone-900);
+            margin-bottom: 0.5rem;
+        }
+        .family-card p {
+            color: var(--stone-600);
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        /* CTA */
+        .cta-section {
+            background: var(--white);
+            border-top: 1px solid var(--stone-200);
+        }
+        .cta-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+        .cta-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .cta-inner p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            max-width: 480px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        .cta-inner a {
+            display: inline-block;
+            background: var(--amber-700);
+            color: var(--white);
+            padding: 0.85rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .cta-inner a:hover { background: var(--amber-800); transform: translateY(-1px); }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid var(--stone-200);
+            padding: 2.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-left {
+            color: var(--stone-500);
+            font-size: 0.85rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        .footer-links a {
+            color: var(--stone-500);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--stone-800); }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            nav { padding: 1rem 1.25rem; }
+            .hero { padding: 3rem 1.25rem 2.5rem; }
+            .problem-inner, .how, .features-inner, .families, .cta-inner {
+                padding: 3.5rem 1.25rem;
+            }
+            .nav-links { gap: 1.25rem; }
+            .nav-links a { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="nav-logo">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="17" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                <ellipse cx="13" cy="16" rx="4" ry="4.5" fill="#92400e"/>
+                <ellipse cx="23" cy="16" rx="4" ry="4.5" fill="#92400e"/>
+                <circle cx="13" cy="15.5" r="2" fill="#fef3c7"/>
+                <circle cx="23" cy="15.5" r="2" fill="#fef3c7"/>
+                <circle cx="13.5" cy="15.5" r="0.9" fill="#292524"/>
+                <circle cx="23.5" cy="15.5" r="0.9" fill="#292524"/>
+                <path d="M16 21 L18 23.5 L20 21" stroke="#92400e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M7 10 Q10 5 13 9" stroke="#92400e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+                <path d="M29 10 Q26 5 23 9" stroke="#92400e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span>Caring Owls</span>
+        </a>
+        <div class="nav-links">
+            <a href="#how-it-works">How It Works</a>
+            <a href="#features">Features</a>
+            <a href="mailto:hello@caringowls.com">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-badge">Protecting the ones you love</div>
+        <h1>Her phone works the same. Scammers just can't reach her.</h1>
+        <p>Caring Owls filters calls and texts for elderly family members with cognitive decline. Only approved contacts get through. Family stays in control.</p>
+        <a href="mailto:hello@caringowls.com" class="hero-cta">Get Early Access</a>
+    </section>
+
+    <!-- PROBLEM -->
+    <section class="problem">
+        <div class="problem-inner">
+            <h2>The problem is real</h2>
+            <p>Millions of seniors are targeted by phone and text scams every year. Existing solutions force painful tradeoffs between protection and independence.</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="number">$3.4B</div>
+                    <div class="label">Lost by seniors 60+ to scams in 2023 (FBI)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">6M+</div>
+                    <div class="label">Americans living with dementia</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">11M+</div>
+                    <div class="label">Family caregivers for dementia patients in the US</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how" id="how-it-works">
+        <h2>How it works</h2>
+        <p>Three simple steps to protect your loved one without changing their daily routine.</p>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Keep their phone number</h3>
+                <p>Your loved one's existing phone number is routed through our system. No new number to remember, no new device to learn.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Set up approved contacts</h3>
+                <p>Family members add trusted contacts through a simple web dashboard. Only approved people can call or text your loved one.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Scammers are blocked silently</h3>
+                <p>Unknown callers and texters are filtered out before they ever reach your loved one's phone. Family is notified and can review any blocked attempts.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features" id="features">
+        <div class="features-inner">
+            <h2>Built for safety and simplicity</h2>
+            <p>Protection that works in the background so your loved one doesn't have to think about it.</p>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📞</div>
+                    <h3>Call Filtering</h3>
+                    <p>Only approved contacts ring through. Unknown callers are sent to voicemail, which family can review and approve.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💬</div>
+                    <h3>Text Filtering</h3>
+                    <p>Scam texts never appear on your loved one's phone. Approved contacts can message normally. Unknown texts are held for family review.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🦉</div>
+                    <h3>Family Dashboard</h3>
+                    <p>Manage approved contacts, review blocked attempts, and monitor activity from any browser. Multiple family members can share access.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Familiar Experience</h3>
+                    <p>The care recipient's iPhone looks and works the same as always. No new interface to learn, no confusing changes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔔</div>
+                    <h3>Real-Time Alerts</h3>
+                    <p>Get notified when unknown numbers attempt contact, when your loved one calls an unknown number, or when voicemails need review.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🆘</div>
+                    <h3>911 Emergency Access</h3>
+                    <p>Emergency calling always works. A dedicated 911 button connects directly through the native cellular network for maximum reliability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOR FAMILIES -->
+    <section class="families">
+        <h2>Designed for caregivers</h2>
+        <p>You're already doing so much. Caring Owls gives you one less thing to worry about.</p>
+        <div class="family-features">
+            <div class="family-card">
+                <h3>Manage contacts remotely</h3>
+                <p>Add or remove approved contacts from anywhere. No need to physically handle your loved one's phone.</p>
+            </div>
+            <div class="family-card">
+                <h3>Review and approve</h3>
+                <p>When a legitimate caller is blocked, listen to their voicemail and add them to the approved list with one click.</p>
+            </div>
+            <div class="family-card">
+                <h3>Share with family</h3>
+                <p>Invite siblings, spouses, or other caregivers to the dashboard. Everyone stays informed, everyone can help manage.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="cta-inner">
+            <h2>Protect someone you love</h2>
+            <p>Caring Owls is currently in early access. Reach out to learn more about protecting your family member from phone scams.</p>
+            <a href="mailto:hello@caringowls.com">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">&copy; 2026 Vival Ventures LLC. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="mailto:hello@caringowls.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
