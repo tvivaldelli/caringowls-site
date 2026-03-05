@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Started — Caring Owls</title>
+    <meta name="description" content="Sign up for Caring Owls and protect your loved one from phone scams.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --amber-50: #fffbeb;
+            --amber-100: #fef3c7;
+            --amber-200: #fde68a;
+            --amber-600: #d97706;
+            --amber-700: #b45309;
+            --amber-800: #92400e;
+            --stone-50: #fafaf9;
+            --stone-100: #f5f5f4;
+            --stone-200: #e7e5e4;
+            --stone-400: #a8a29e;
+            --stone-500: #78716c;
+            --stone-600: #57534e;
+            --stone-700: #44403c;
+            --stone-800: #292524;
+            --stone-900: #1c1917;
+            --white: #ffffff;
+            --red-600: #dc2626;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            color: var(--stone-800);
+            background: var(--stone-50);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--stone-800);
+        }
+        .nav-logo svg { width: 36px; height: 36px; }
+        .nav-logo span {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            letter-spacing: -0.01em;
+        }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a {
+            text-decoration: none;
+            color: var(--stone-600);
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--stone-900); }
+
+        .page-header {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+        .page-header h1 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            color: var(--stone-900);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        .page-header p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .form-container {
+            max-width: 540px;
+            margin: 0 auto;
+            padding: 2rem 2rem 5rem;
+        }
+        .form-section {
+            margin-bottom: 2rem;
+        }
+        .form-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--stone-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--stone-700);
+            margin-bottom: 0.35rem;
+        }
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.65rem 0.85rem;
+            border: 1px solid var(--stone-200);
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--stone-800);
+            background: var(--white);
+            transition: border-color 0.2s;
+        }
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--amber-600);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .consent-section {
+            margin-bottom: 2rem;
+        }
+        .consent-section h2 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            color: var(--stone-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        .consent-box {
+            background: var(--amber-50);
+            border: 1px solid var(--amber-200);
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+        .consent-check {
+            display: flex;
+            gap: 0.75rem;
+            align-items: flex-start;
+        }
+        .consent-check input[type="checkbox"] {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            accent-color: var(--amber-700);
+        }
+        .consent-check label {
+            font-size: 0.88rem;
+            color: var(--stone-600);
+            line-height: 1.65;
+        }
+        .consent-check label a {
+            color: var(--amber-700);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background: var(--amber-700);
+            color: var(--white);
+            padding: 0.85rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .submit-btn:hover { background: var(--amber-800); transform: translateY(-1px); }
+
+        .error-msg {
+            color: var(--red-600);
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+
+        .thank-you {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem 5rem;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+        .thank-you .check-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--amber-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.75rem;
+        }
+        .thank-you h2 {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--stone-900);
+            margin-bottom: 0.75rem;
+        }
+        .thank-you p {
+            color: var(--stone-600);
+            font-size: 1rem;
+            line-height: 1.7;
+            max-width: 420px;
+            margin: 0 auto;
+        }
+
+        footer {
+            border-top: 1px solid var(--stone-200);
+            padding: 2.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-left { color: var(--stone-500); font-size: 0.85rem; }
+        .footer-links { display: flex; gap: 1.5rem; }
+        .footer-links a {
+            color: var(--stone-500);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--stone-800); }
+
+        @media (max-width: 640px) {
+            nav { padding: 1rem 1.25rem; }
+            .nav-links { gap: 1.25rem; }
+            .nav-links a { font-size: 0.85rem; }
+            .page-header { padding: 2rem 1.25rem 0.75rem; }
+            .form-container { padding: 1.5rem 1.25rem 4rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .thank-you { padding: 2rem 1.25rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="nav-logo">
+            <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="18" cy="18" r="17" fill="#fef3c7" stroke="#d97706" stroke-width="1.5"/>
+                <ellipse cx="13" cy="16" rx="4" ry="4.5" fill="#92400e"/>
+                <ellipse cx="23" cy="16" rx="4" ry="4.5" fill="#92400e"/>
+                <circle cx="13" cy="15.5" r="2" fill="#fef3c7"/>
+                <circle cx="23" cy="15.5" r="2" fill="#fef3c7"/>
+                <circle cx="13.5" cy="15.5" r="0.9" fill="#292524"/>
+                <circle cx="23.5" cy="15.5" r="0.9" fill="#292524"/>
+                <path d="M16 21 L18 23.5 L20 21" stroke="#92400e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                <path d="M7 10 Q10 5 13 9" stroke="#92400e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+                <path d="M29 10 Q26 5 23 9" stroke="#92400e" stroke-width="1.2" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span>Caring Owls</span>
+        </a>
+        <div class="nav-links">
+            <a href="/#how-it-works">How It Works</a>
+            <a href="/#features">Features</a>
+            <a href="mailto:hello@caringowls.com">Contact</a>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <h1>Get Started</h1>
+        <p>Set up protection for your loved one in just a few minutes.</p>
+    </div>
+
+    <form id="signup-form" class="form-container" novalidate>
+
+        <div class="form-section">
+            <h2>Caregiver Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cg-first-name">First Name</label>
+                    <input type="text" id="cg-first-name" name="cg-first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cg-last-name">Last Name</label>
+                    <input type="text" id="cg-last-name" name="cg-last-name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cg-email">Email</label>
+                <input type="email" id="cg-email" name="cg-email" required>
+            </div>
+            <div class="form-group">
+                <label for="cg-password">Password</label>
+                <input type="password" id="cg-password" name="cg-password" required minlength="8">
+            </div>
+            <div class="form-group">
+                <label for="cg-confirm-password">Confirm Password</label>
+                <input type="password" id="cg-confirm-password" name="cg-confirm-password" required>
+                <p class="error-msg" id="password-error">Passwords do not match.</p>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Care Recipient Information</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cr-first-name">First Name</label>
+                    <input type="text" id="cr-first-name" name="cr-first-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="cr-last-name">Last Name</label>
+                    <input type="text" id="cr-last-name" name="cr-last-name" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cr-phone">Phone Number</label>
+                <input type="tel" id="cr-phone" name="cr-phone" required placeholder="(555) 123-4567">
+            </div>
+            <div class="form-group">
+                <label for="cr-relationship">Relationship</label>
+                <select id="cr-relationship" name="cr-relationship" required>
+                    <option value="" disabled selected>Select relationship</option>
+                    <option value="parent">Parent</option>
+                    <option value="spouse">Spouse</option>
+                    <option value="grandparent">Grandparent</option>
+                    <option value="sibling">Sibling</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="consent-section">
+            <h2>Consent &amp; Authorization</h2>
+            <div class="consent-box">
+                <div class="consent-check">
+                    <input type="checkbox" id="consent" name="consent" required>
+                    <label for="consent">
+                        I confirm that I am an authorized caregiver for the care recipient named above and have the authority to manage their communications. I consent to Caring Owls sending and receiving SMS text messages on behalf of the care recipient at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time. I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+                    </label>
+                </div>
+                <p class="error-msg" id="consent-error">You must agree to continue.</p>
+            </div>
+        </div>
+
+        <button type="submit" class="submit-btn">Get Started</button>
+    </form>
+
+    <div class="thank-you" id="thank-you">
+        <div class="check-icon">&#10003;</div>
+        <h2>You're all set!</h2>
+        <p>Thank you for signing up. We'll be in touch at the email you provided with next steps to set up protection for your loved one.</p>
+    </div>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">&copy; 2026 Vival Ventures LLC. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="mailto:hello@caringowls.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var pw = document.getElementById('cg-password').value;
+            var cpw = document.getElementById('cg-confirm-password').value;
+            var pwError = document.getElementById('password-error');
+            var consentError = document.getElementById('consent-error');
+            var consent = document.getElementById('consent');
+
+            pwError.style.display = 'none';
+            consentError.style.display = 'none';
+
+            if (pw !== cpw) {
+                pwError.style.display = 'block';
+                document.getElementById('cg-confirm-password').focus();
+                return;
+            }
+
+            if (!consent.checked) {
+                consentError.style.display = 'block';
+                consent.focus();
+                return;
+            }
+
+            if (!this.checkValidity()) {
+                this.reportValidity();
+                return;
+            }
+
+            document.getElementById('signup-form').style.display = 'none';
+            document.querySelector('.page-header').style.display = 'none';
+            document.getElementById('thank-you').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    </script>
+
+</body>
+</html>
