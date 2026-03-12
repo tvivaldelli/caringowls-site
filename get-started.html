@@ -188,6 +188,7 @@
             transition: background 0.2s, transform 0.15s;
         }
         .submit-btn:hover { background: var(--amber-800); transform: translateY(-1px); }
+        .submit-btn:disabled { background: var(--stone-400); cursor: not-allowed; transform: none; }
 
         .error-msg {
             color: var(--red-600);
@@ -251,6 +252,20 @@
         }
         .footer-links a:hover { color: var(--stone-800); }
 
+        .form-error {
+            display: none;
+            text-align: center;
+            padding: 3rem 2rem 5rem;
+            max-width: 540px;
+            margin: 0 auto;
+        }
+        .form-error p {
+            color: var(--red-600);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+        .form-error a { color: var(--amber-700); }
+
         @media (max-width: 640px) {
             nav { padding: 1rem 1.25rem; }
             .nav-links { gap: 1.25rem; }
@@ -310,15 +325,6 @@
                 <label for="cg-email">Email</label>
                 <input type="email" id="cg-email" name="cg-email" required>
             </div>
-            <div class="form-group">
-                <label for="cg-password">Password</label>
-                <input type="password" id="cg-password" name="cg-password" required minlength="8">
-            </div>
-            <div class="form-group">
-                <label for="cg-confirm-password">Confirm Password</label>
-                <input type="password" id="cg-confirm-password" name="cg-confirm-password" required>
-                <p class="error-msg" id="password-error">Passwords do not match.</p>
-            </div>
         </div>
 
         <div class="form-section">
@@ -356,7 +362,7 @@
                 <div class="consent-check">
                     <input type="checkbox" id="consent" name="consent" required>
                     <label for="consent">
-                        I confirm that I am an authorized caregiver for the care recipient named above and have the authority to manage their communications. I consent to Caring Owls sending and receiving SMS text messages on behalf of the care recipient at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time. I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.
+                        I confirm that I am an authorized caregiver for the care recipient named above and have the authority to manage their communications. I consent to Caring Owls contacting me about setting up SMS communication filtering for the care recipient named above. I also consent to Caring Owls sending and receiving SMS text messages on behalf of the care recipient at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time. I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.
                     </label>
                 </div>
                 <p class="error-msg" id="consent-error">You must agree to continue.</p>
@@ -369,7 +375,11 @@
     <div class="thank-you" id="thank-you">
         <div class="check-icon">&#10003;</div>
         <h2>You're all set!</h2>
-        <p>Thank you for signing up. We'll be in touch at the email you provided with next steps to set up protection for your loved one.</p>
+        <p>Thank you for signing up! Check your email for a confirmation from Caring Owls. We'll reach out with next steps to set up protection for your loved one.</p>
+    </div>
+
+    <div class="form-error" id="form-error">
+        <p>Something went wrong. Please try again or email us at <a href="mailto:support@caringowls.com">support@caringowls.com</a>.</p>
     </div>
 
     <footer>
@@ -384,23 +394,15 @@
     </footer>
 
     <script>
-        document.getElementById('signup-form').addEventListener('submit', function(e) {
+        document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            var pw = document.getElementById('cg-password').value;
-            var cpw = document.getElementById('cg-confirm-password').value;
-            var pwError = document.getElementById('password-error');
             var consentError = document.getElementById('consent-error');
             var consent = document.getElementById('consent');
+            var submitBtn = this.querySelector('.submit-btn');
 
-            pwError.style.display = 'none';
             consentError.style.display = 'none';
-
-            if (pw !== cpw) {
-                pwError.style.display = 'block';
-                document.getElementById('cg-confirm-password').focus();
-                return;
-            }
+            document.getElementById('form-error').style.display = 'none';
 
             if (!consent.checked) {
                 consentError.style.display = 'block';
@@ -413,10 +415,44 @@
                 return;
             }
 
-            document.getElementById('signup-form').style.display = 'none';
-            document.querySelector('.page-header').style.display = 'none';
-            document.getElementById('thank-you').style.display = 'block';
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            var payload = {
+                caregiverFirstName: document.getElementById('cg-first-name').value,
+                caregiverLastName: document.getElementById('cg-last-name').value,
+                caregiverEmail: document.getElementById('cg-email').value,
+                recipientFirstName: document.getElementById('cr-first-name').value,
+                recipientLastName: document.getElementById('cr-last-name').value,
+                recipientPhone: document.getElementById('cr-phone').value,
+                relationship: document.getElementById('cr-relationship').value,
+                consentChecked: consent.checked
+            };
+
+            try {
+                var response = await fetch('/api/waitlist', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                var data = await response.json();
+
+                if (response.ok && data.success) {
+                    document.getElementById('signup-form').style.display = 'none';
+                    document.querySelector('.page-header').style.display = 'none';
+                    document.getElementById('thank-you').style.display = 'block';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Get Started';
+                    document.getElementById('form-error').style.display = 'block';
+                }
+            } catch (err) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Get Started';
+                document.getElementById('form-error').style.display = 'block';
+            }
         });
     </script>
 
