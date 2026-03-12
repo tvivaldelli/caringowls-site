@@ -4,4 +4,4 @@ compatibility_date = "2024-01-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "caringowls-waitlist"
-database_id = "" # Fill in after creating the D1 database in the Cloudflare dashboard
+database_id = "968c6cee-b795-4049-98dd-27c039855033"
