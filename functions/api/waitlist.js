@@ -134,7 +134,7 @@ Thank you for signing up for Caring Owls. We received your request to set up com
 Here's what happens next:
 - Our team will review your submission and reach out to schedule setup.
 - In the meantime, start thinking about which phone contacts should be on ${recipientFirstName}'s approved list.
-- If you have questions, reply to this email or reach us at support@caringowls.com.
+- If you have questions, reply to this email or reach us at hello@caringowls.com.
 
 What is Caring Owls?
 Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.
@@ -162,7 +162,7 @@ function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipient
   <ul>
     <li>Our team will review your submission and reach out to schedule setup.</li>
     <li>In the meantime, start thinking about which phone contacts should be on ${recipientFirstName}'s approved list.</li>
-    <li>If you have questions, reply to this email or reach us at <a href="mailto:support@caringowls.com" style="color: #b45309;">support@caringowls.com</a>.</li>
+    <li>If you have questions, reply to this email or reach us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.</li>
   </ul>
   <h3 style="color: #44403c; margin-top: 1.5rem;">What is Caring Owls?</h3>
   <p>Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.</p>
