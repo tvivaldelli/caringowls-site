@@ -83,6 +83,7 @@ export async function onRequestPost(context) {
         },
         body: JSON.stringify({
           from: "Caring Owls <noreply@caringowls.com>",
+          reply_to: "hello@caringowls.com",
           to: [caregiverEmail.trim().toLowerCase()],
           subject: "Welcome to Caring Owls — We received your request",
           html: buildConfirmationHtml(
