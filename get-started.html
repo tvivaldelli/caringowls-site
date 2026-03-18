@@ -393,6 +393,14 @@
     </footer>
 
     <script>
+        document.getElementById('cr-phone').addEventListener('input', function(e) {
+            var digits = this.value.replace(/\D/g, '').substring(0, 10);
+            if (digits.length === 0) { this.value = ''; }
+            else if (digits.length <= 3) { this.value = '(' + digits; }
+            else if (digits.length <= 6) { this.value = '(' + digits.substring(0, 3) + ') ' + digits.substring(3); }
+            else { this.value = '(' + digits.substring(0, 3) + ') ' + digits.substring(3, 6) + '-' + digits.substring(6); }
+        });
+
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -415,7 +423,7 @@
                 caregiverEmail: document.getElementById('cg-email').value,
                 recipientFirstName: document.getElementById('cr-first-name').value,
                 recipientLastName: document.getElementById('cr-last-name').value,
-                recipientPhone: document.getElementById('cr-phone').value,
+                recipientPhone: document.getElementById('cr-phone').value.replace(/\D/g, ''),
                 relationship: document.getElementById('cr-relationship').value,
                 consentChecked: consent.checked
             };
