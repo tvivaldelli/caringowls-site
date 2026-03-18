@@ -360,12 +360,11 @@
             <h2>Consent &amp; Authorization</h2>
             <div class="consent-box">
                 <div class="consent-check">
-                    <input type="checkbox" id="consent" name="consent" required>
+                    <input type="checkbox" id="consent" name="consent">
                     <label for="consent">
                         I confirm that I am an authorized caregiver for the care recipient named above and have the authority to manage their communications. I consent to Caring Owls contacting me about setting up SMS communication filtering for the care recipient named above. I also consent to Caring Owls sending and receiving SMS text messages on behalf of the care recipient at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.
                     </label>
                 </div>
-                <p class="error-msg" id="consent-error">You must agree to continue.</p>
             </div>
         </div>
 
@@ -397,18 +396,10 @@
         document.getElementById('signup-form').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            var consentError = document.getElementById('consent-error');
             var consent = document.getElementById('consent');
             var submitBtn = this.querySelector('.submit-btn');
 
-            consentError.style.display = 'none';
             document.getElementById('form-error').style.display = 'none';
-
-            if (!consent.checked) {
-                consentError.style.display = 'block';
-                consent.focus();
-                return;
-            }
 
             if (!this.checkValidity()) {
                 this.reportValidity();

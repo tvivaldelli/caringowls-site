@@ -38,13 +38,6 @@ export async function onRequestPost(context) {
       );
     }
 
-    if (!consentChecked) {
-      return Response.json(
-        { success: false, error: "Consent is required" },
-        { status: 400, headers: corsHeaders }
-      );
-    }
-
     // Basic email format check
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(caregiverEmail.trim())) {
       return Response.json(
@@ -69,7 +62,7 @@ export async function onRequestPost(context) {
         recipientLastName.trim(),
         recipientPhone.trim(),
         relationship.trim(),
-        1
+        consentChecked ? 1 : 0
       )
       .run();
 
