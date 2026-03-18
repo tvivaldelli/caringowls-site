@@ -82,12 +82,14 @@ export async function onRequestPost(context) {
           html: buildConfirmationHtml(
             caregiverFirstName.trim(),
             recipientFirstName.trim(),
-            recipientPhone.trim()
+            recipientPhone.trim(),
+            consentChecked
           ),
           text: buildConfirmationText(
             caregiverFirstName.trim(),
             recipientFirstName.trim(),
-            recipientPhone.trim()
+            recipientPhone.trim(),
+            consentChecked
           ),
         }),
       });
@@ -120,7 +122,11 @@ export async function onRequestOptions() {
   });
 }
 
-function buildConfirmationText(caregiverFirstName, recipientFirstName, recipientPhone) {
+function buildConfirmationText(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked) {
+  const smsText = consentChecked
+    ? `SMS Messaging: By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+    : `SMS Messaging: You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at hello@caringowls.com.`;
+
   return `Hi ${caregiverFirstName},
 
 Thank you for signing up for Caring Owls. We received your request to set up communication protection for ${recipientFirstName}.
@@ -133,7 +139,7 @@ Here's what happens next:
 What is Caring Owls?
 Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.
 
-SMS Messaging: By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.
+${smsText}
 
 Thank you for protecting your loved one.
 
@@ -142,7 +148,11 @@ Vival Ventures LLC
 caringowls.com`;
 }
 
-function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipientPhone) {
+function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked) {
+  const smsHtml = consentChecked
+    ? `<strong>SMS Messaging:</strong> By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+    : `<strong>SMS Messaging:</strong> You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.`;
+
   return `<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -161,7 +171,7 @@ function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipient
   <h3 style="color: #44403c; margin-top: 1.5rem;">What is Caring Owls?</h3>
   <p>Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.</p>
   <p style="font-size: 0.85rem; color: #78716c; margin-top: 2rem; border-top: 1px solid #e7e5e4; padding-top: 1rem;">
-    <strong>SMS Messaging:</strong> By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.
+    ${smsHtml}
   </p>
   <p style="font-size: 0.85rem; color: #78716c;">
     — The Caring Owls Team<br>
