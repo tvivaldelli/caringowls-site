@@ -42,3 +42,14 @@ Marketing and legal pages for Caring Owls — a communication filtering service 
 - Nav and footer markup is copied across pages (keep them in sync manually)
 - Links between pages use absolute paths (e.g., `/terms.html`)
 - Legal pages use numbered sections — renumber when inserting new sections
+
+## Local Testing
+- `npx wrangler pages dev . --port 8788` — runs local dev server with D1 bindings
+- Local D1 tables must be created first: `npx wrangler d1 execute caringowls-waitlist --local --file schema.sql`
+- Wrangler redirects `.html` URLs to clean paths (e.g., `/get-started.html` → 308 → `/get-started`)
+- Resend email calls fail locally (no API key) — test email templates by calling build functions directly with Node
+
+## Gotchas
+- Form validation exists in 3 places: HTML attributes, frontend JS (`get-started.html` `<script>`), and backend (`functions/api/waitlist.js`) — changes to validation rules must update all layers
+- Confirmation email templates (HTML + plaintext) live in `functions/api/waitlist.js`, not in separate template files
+- Phone numbers are stored as digits-only in D1; frontend formats for display with `(XXX) XXX-XXXX`
