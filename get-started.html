@@ -197,6 +197,18 @@
             display: none;
         }
 
+        .field-note {
+            display: none;
+            background: var(--amber-50);
+            border: 1px solid var(--amber-200);
+            border-radius: 8px;
+            padding: 0.75rem 0.85rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--stone-700);
+            line-height: 1.55;
+        }
+
         .thank-you {
             display: none;
             text-align: center;
@@ -354,6 +366,42 @@
                     <option value="other">Other</option>
                 </select>
             </div>
+            <div class="form-group">
+                <label for="cr-iphone">Does your loved one use an iPhone?</label>
+                <select id="cr-iphone" name="cr-iphone" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <p class="field-note" id="cr-iphone-note">Caring Owls currently supports iPhone only. Leave your email and we'll let you know when that changes.</p>
+            </div>
+            <div class="form-group">
+                <label for="cr-texts">Does your loved one send and receive text messages?</label>
+                <select id="cr-texts" name="cr-texts" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                    <option value="sometimes">Sometimes</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cr-journey">Where is your loved one on their journey?</label>
+                <select id="cr-journey" name="cr-journey" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="early">Early changes</option>
+                    <option value="moderate">Moderate decline</option>
+                    <option value="significant">Significant decline</option>
+                    <option value="not-sure">Not sure</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="cg-proximity">Are you local to your loved one or supporting from a distance?</label>
+                <select id="cg-proximity" name="cg-proximity" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="local">Local</option>
+                    <option value="remote">Remote</option>
+                </select>
+            </div>
         </div>
 
         <div class="consent-section">
@@ -425,6 +473,10 @@
                 recipientLastName: document.getElementById('cr-last-name').value,
                 recipientPhone: document.getElementById('cr-phone').value.replace(/\D/g, ''),
                 relationship: document.getElementById('cr-relationship').value,
+                recipientUsesIphone: document.getElementById('cr-iphone').value,
+                recipientTextsMessages: document.getElementById('cr-texts').value,
+                recipientJourneyStage: document.getElementById('cr-journey').value,
+                caregiverProximity: document.getElementById('cg-proximity').value,
                 consentChecked: consent.checked
             };
 
@@ -452,6 +504,11 @@
                 submitBtn.textContent = 'Request Access';
                 document.getElementById('form-error').style.display = 'block';
             }
+        });
+
+        document.getElementById('cr-iphone').addEventListener('change', function() {
+            document.getElementById('cr-iphone-note').style.display =
+                this.value === 'no' ? 'block' : 'none';
         });
     </script>
 
