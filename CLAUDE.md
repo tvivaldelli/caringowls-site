@@ -30,6 +30,7 @@ Marketing and legal pages for Caring Owls — a communication filtering service 
 ## Key Files
 - `schema.sql` — D1 table definition for waitlist (source of truth for a fresh database)
 - `migrations/` — incremental D1 schema changes, applied in filename order
+- `assets/` — brand imagery: header `logo.png` (transparent), favicons, `apple-touch-icon.png`, PWA icons, `og-image.png`. `favicon.ico` lives at repo root
 - `wrangler.toml` — D1 database binding config
 
 ## Database Migrations
@@ -43,7 +44,7 @@ wrangler d1 execute caringowls-waitlist --remote --file=./migrations/0001_add_qu
 - **Fonts:** DM Serif Display (headings), DM Sans (body) — loaded from Google Fonts
 - **Color palette:** amber/stone from Tailwind-style tokens defined as CSS custom properties
 - **Layout:** Max-width 1100px, responsive at 640px breakpoint
-- **Components:** Nav with owl SVG logo, footer with legal links — duplicated per page
+- **Components:** Nav with owl logo (`/assets/logo.png`), footer with legal links — duplicated per page
 
 ## Conventions
 - No JavaScript frameworks or dependencies
