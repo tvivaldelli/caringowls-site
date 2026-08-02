@@ -7,6 +7,10 @@ CREATE TABLE IF NOT EXISTS waitlist (
   recipient_last_name TEXT NOT NULL,
   recipient_phone TEXT NOT NULL,
   relationship TEXT NOT NULL,
+  recipient_uses_iphone TEXT,
+  recipient_texts_messages TEXT,
+  recipient_journey_stage TEXT,
+  caregiver_proximity TEXT,
   consent_checked INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );

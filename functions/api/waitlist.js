@@ -18,6 +18,10 @@ export async function onRequestPost(context) {
       recipientLastName,
       recipientPhone,
       relationship,
+      recipientUsesIphone,
+      recipientTextsMessages,
+      recipientJourneyStage,
+      caregiverProximity,
       consentChecked,
     } = body;
 
@@ -30,6 +34,10 @@ export async function onRequestPost(context) {
     if (!recipientLastName?.trim()) missing.push("recipientLastName");
     if (!recipientPhone?.trim()) missing.push("recipientPhone");
     if (!relationship?.trim()) missing.push("relationship");
+    if (!recipientUsesIphone?.trim()) missing.push("recipientUsesIphone");
+    if (!recipientTextsMessages?.trim()) missing.push("recipientTextsMessages");
+    if (!recipientJourneyStage?.trim()) missing.push("recipientJourneyStage");
+    if (!caregiverProximity?.trim()) missing.push("caregiverProximity");
 
     if (missing.length > 0) {
       return Response.json(
@@ -51,8 +59,9 @@ export async function onRequestPost(context) {
       `INSERT INTO waitlist (
         caregiver_first_name, caregiver_last_name, caregiver_email,
         recipient_first_name, recipient_last_name, recipient_phone,
-        relationship, consent_checked
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`
+        relationship, recipient_uses_iphone, recipient_texts_messages,
+        recipient_journey_stage, caregiver_proximity, consent_checked
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         caregiverFirstName.trim(),
@@ -62,6 +71,10 @@ export async function onRequestPost(context) {
         recipientLastName.trim(),
         recipientPhone.trim(),
         relationship.trim(),
+        recipientUsesIphone.trim(),
+        recipientTextsMessages.trim(),
+        recipientJourneyStage.trim(),
+        caregiverProximity.trim(),
         consentChecked ? 1 : 0
       )
       .run();
@@ -98,6 +111,44 @@ export async function onRequestPost(context) {
       console.error("Failed to send confirmation email:", emailErr);
     }
 
+    // Notify the operator of the new submission (includes qualification
+    // answers and flags the non-iPhone case). Non-fatal on failure.
+    try {
+      const notifyTo = env.NOTIFY_EMAIL || "hello@caringowls.com";
+      const notifyData = {
+        caregiverFirstName: caregiverFirstName.trim(),
+        caregiverLastName: caregiverLastName.trim(),
+        caregiverEmail: caregiverEmail.trim().toLowerCase(),
+        recipientFirstName: recipientFirstName.trim(),
+        recipientLastName: recipientLastName.trim(),
+        recipientPhone: recipientPhone.trim(),
+        relationship: relationship.trim(),
+        iphone: labelValue(IPHONE_LABELS, recipientUsesIphone),
+        texts: labelValue(TEXTS_LABELS, recipientTextsMessages),
+        journey: labelValue(JOURNEY_LABELS, recipientJourneyStage),
+        proximity: labelValue(PROXIMITY_LABELS, caregiverProximity),
+        iphoneNo: recipientUsesIphone.trim().toLowerCase() === "no",
+      };
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          from: "Caring Owls <noreply@caringowls.com>",
+          reply_to: notifyData.caregiverEmail,
+          to: [notifyTo],
+          subject: `${notifyData.iphoneNo ? "[NON-IPHONE] " : ""}New Request Access — ${notifyData.caregiverFirstName} ${notifyData.caregiverLastName}`,
+          html: buildOperatorHtml(notifyData),
+          text: buildOperatorText(notifyData),
+        }),
+      });
+    } catch (notifyErr) {
+      // Log but don't fail the request — submission is already stored
+      console.error("Failed to send operator notification:", notifyErr);
+    }
+
     return Response.json(
       { success: true, message: "Waitlist submission received" },
       { status: 200, headers: corsHeaders }
@@ -120,6 +171,63 @@ export async function onRequestOptions() {
       "Access-Control-Allow-Headers": "Content-Type",
     },
   });
+}
+
+const IPHONE_LABELS = { yes: "Yes", no: "No" };
+const TEXTS_LABELS = { yes: "Yes", no: "No", sometimes: "Sometimes" };
+const JOURNEY_LABELS = {
+  early: "Early changes",
+  moderate: "Moderate decline",
+  significant: "Significant decline",
+  "not-sure": "Not sure",
+};
+const PROXIMITY_LABELS = { local: "Local", remote: "Remote" };
+
+function labelValue(map, raw) {
+  const key = String(raw ?? "").trim().toLowerCase();
+  return map[key] || String(raw ?? "").trim();
+}
+
+function buildOperatorText(d) {
+  return `New Request Access submission
+
+Caregiver: ${d.caregiverFirstName} ${d.caregiverLastName} <${d.caregiverEmail}>
+Loved one: ${d.recipientFirstName} ${d.recipientLastName}
+Phone: ${d.recipientPhone}
+Relationship: ${d.relationship}
+
+Qualification
+- Uses an iPhone: ${d.iphone}${d.iphoneNo ? "  [FLAG: Caring Owls supports iPhone only]" : ""}
+- Sends/receives texts: ${d.texts}
+- Journey stage: ${d.journey}
+- Caregiver proximity: ${d.proximity}
+
+Consent: agreed`;
+}
+
+function buildOperatorHtml(d) {
+  const flag = d.iphoneNo
+    ? ` <span style="color: #b45309; font-weight: 600;">— Caring Owls supports iPhone only</span>`
+    : "";
+  return `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #292524; line-height: 1.6; max-width: 560px; margin: 0 auto; padding: 2rem;">
+  <h2 style="font-size: 1.25rem; color: #1c1917;">New Request Access submission${d.iphoneNo ? ' <span style="color: #b45309;">[NON-IPHONE]</span>' : ""}</h2>
+  <p><strong>Caregiver:</strong> ${d.caregiverFirstName} ${d.caregiverLastName} &lt;<a href="mailto:${d.caregiverEmail}" style="color: #b45309;">${d.caregiverEmail}</a>&gt;<br>
+  <strong>Loved one:</strong> ${d.recipientFirstName} ${d.recipientLastName}<br>
+  <strong>Phone:</strong> ${d.recipientPhone}<br>
+  <strong>Relationship:</strong> ${d.relationship}</p>
+  <h3 style="color: #44403c; margin-top: 1.5rem;">Qualification</h3>
+  <ul>
+    <li><strong>Uses an iPhone:</strong> ${d.iphone}${flag}</li>
+    <li><strong>Sends/receives texts:</strong> ${d.texts}</li>
+    <li><strong>Journey stage:</strong> ${d.journey}</li>
+    <li><strong>Caregiver proximity:</strong> ${d.proximity}</li>
+  </ul>
+  <p style="font-size: 0.85rem; color: #78716c;">Reply to this email to reach the caregiver directly.</p>
+</body>
+</html>`;
 }
 
 function buildConfirmationText(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked) {
