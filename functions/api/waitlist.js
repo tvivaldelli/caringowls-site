@@ -132,6 +132,7 @@ export async function onRequestPost(context) {
           journey: labelValue(JOURNEY_LABELS, recipientJourneyStage),
           proximity: labelValue(PROXIMITY_LABELS, caregiverProximity),
           iphoneNo: recipientUsesIphone.trim().toLowerCase() === "no",
+          consentChecked: !!consentChecked,
         };
         await fetch("https://api.resend.com/emails", {
           method: "POST",
@@ -207,7 +208,7 @@ Qualification
 - Journey stage: ${d.journey}
 - Caregiver proximity: ${d.proximity}
 
-Consent: agreed`;
+Consent: ${d.consentChecked ? "agreed" : "not agreed"}`;
 }
 
 function buildOperatorHtml(d) {
@@ -222,7 +223,8 @@ function buildOperatorHtml(d) {
   <p><strong>Caregiver:</strong> ${d.caregiverFirstName} ${d.caregiverLastName} &lt;<a href="mailto:${d.caregiverEmail}" style="color: #b45309;">${d.caregiverEmail}</a>&gt;<br>
   <strong>Loved one:</strong> ${d.recipientFirstName} ${d.recipientLastName}<br>
   <strong>Phone:</strong> ${d.recipientPhone}<br>
-  <strong>Relationship:</strong> ${d.relationship}</p>
+  <strong>Relationship:</strong> ${d.relationship}<br>
+  <strong>Consent:</strong> ${d.consentChecked ? "agreed" : "not agreed"}</p>
   <h3 style="color: #44403c; margin-top: 1.5rem;">Qualification</h3>
   <ul>
     <li><strong>Uses an iPhone:</strong> ${d.iphone}${flag}</li>
