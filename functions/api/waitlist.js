@@ -114,36 +114,41 @@ export async function onRequestPost(context) {
     // Notify the operator of the new submission (includes qualification
     // answers and flags the non-iPhone case). Non-fatal on failure.
     try {
-      const notifyTo = env.NOTIFY_EMAIL || "hello@caringowls.com";
-      const notifyData = {
-        caregiverFirstName: caregiverFirstName.trim(),
-        caregiverLastName: caregiverLastName.trim(),
-        caregiverEmail: caregiverEmail.trim().toLowerCase(),
-        recipientFirstName: recipientFirstName.trim(),
-        recipientLastName: recipientLastName.trim(),
-        recipientPhone: recipientPhone.trim(),
-        relationship: relationship.trim(),
-        iphone: labelValue(IPHONE_LABELS, recipientUsesIphone),
-        texts: labelValue(TEXTS_LABELS, recipientTextsMessages),
-        journey: labelValue(JOURNEY_LABELS, recipientJourneyStage),
-        proximity: labelValue(PROXIMITY_LABELS, caregiverProximity),
-        iphoneNo: recipientUsesIphone.trim().toLowerCase() === "no",
-      };
-      await fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          from: "Caring Owls <noreply@caringowls.com>",
-          reply_to: notifyData.caregiverEmail,
-          to: [notifyTo],
-          subject: `${notifyData.iphoneNo ? "[NON-IPHONE] " : ""}New Request Access — ${notifyData.caregiverFirstName} ${notifyData.caregiverLastName}`,
-          html: buildOperatorHtml(notifyData),
-          text: buildOperatorText(notifyData),
-        }),
-      });
+      const notifyTo = env.NOTIFY_EMAIL;
+      if (!notifyTo) {
+        // No dead-mailbox fallback: skip rather than bounce.
+        console.warn("NOTIFY_EMAIL not set — skipping operator notification");
+      } else {
+        const notifyData = {
+          caregiverFirstName: caregiverFirstName.trim(),
+          caregiverLastName: caregiverLastName.trim(),
+          caregiverEmail: caregiverEmail.trim().toLowerCase(),
+          recipientFirstName: recipientFirstName.trim(),
+          recipientLastName: recipientLastName.trim(),
+          recipientPhone: recipientPhone.trim(),
+          relationship: relationship.trim(),
+          iphone: labelValue(IPHONE_LABELS, recipientUsesIphone),
+          texts: labelValue(TEXTS_LABELS, recipientTextsMessages),
+          journey: labelValue(JOURNEY_LABELS, recipientJourneyStage),
+          proximity: labelValue(PROXIMITY_LABELS, caregiverProximity),
+          iphoneNo: recipientUsesIphone.trim().toLowerCase() === "no",
+        };
+        await fetch("https://api.resend.com/emails", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${env.RESEND_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            from: "Caring Owls <noreply@caringowls.com>",
+            reply_to: notifyData.caregiverEmail,
+            to: [notifyTo],
+            subject: `${notifyData.iphoneNo ? "[NON-IPHONE] " : ""}New Request Access — ${notifyData.caregiverFirstName} ${notifyData.caregiverLastName}`,
+            html: buildOperatorHtml(notifyData),
+            text: buildOperatorText(notifyData),
+          }),
+        });
+      }
     } catch (notifyErr) {
       // Log but don't fail the request — submission is already stored
       console.error("Failed to send operator notification:", notifyErr);
