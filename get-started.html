@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Started — Caring Owls</title>
+    <title>Request Access — Caring Owls</title>
     <meta name="description" content="Sign up for Caring Owls and protect your loved one from phone scams.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -303,8 +303,8 @@
     </nav>
 
     <div class="page-header">
-        <h1>Get Started</h1>
-        <p>Set up protection for your loved one in just a few minutes.</p>
+        <h1>Request Access</h1>
+        <p>Tell us about your family and we'll help you set up protection for your loved one.</p>
     </div>
 
     <form id="signup-form" class="form-container" novalidate>
@@ -368,7 +368,7 @@
             </div>
         </div>
 
-        <button type="submit" class="submit-btn">Get Started</button>
+        <button type="submit" class="submit-btn">Request Access</button>
     </form>
 
     <div class="thank-you" id="thank-you">
@@ -444,12 +444,12 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Get Started';
+                    submitBtn.textContent = 'Request Access';
                     document.getElementById('form-error').style.display = 'block';
                 }
             } catch (err) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Get Started';
+                submitBtn.textContent = 'Request Access';
                 document.getElementById('form-error').style.display = 'block';
             }
         });
