@@ -35,7 +35,7 @@ Marketing and legal pages for Caring Owls — a communication filtering service 
 - `_redirects` — Cloudflare Pages redirect rules. Query strings are preserved across the redirect (verified locally), so `?plan=` survives `/request-access` → `/get-started.html`
 
 ## Database Migrations
-The live `caringowls-waitlist` D1 table already holds data, so schema changes ship as incremental migrations in `migrations/`, not by re-running `schema.sql`. Any Worker change that reads or writes new columns requires running the migration against the **remote** database **before** deploying the Worker — otherwise the new `INSERT`/`SELECT` runs against a table without those columns and every submission fails. Keep `schema.sql` and the migrations in sync so a fresh setup and a migrated database end up identical.
+Schema changes ship as incremental migrations in `migrations/`, not by re-running `schema.sql`. `schema.sql` is `CREATE TABLE IF NOT EXISTS`, so running it against the existing `caringowls-waitlist` table is a no-op and will not add columns — this holds regardless of how many rows the table currently has. Any Worker change that reads or writes new columns requires running the migration against the **remote** database **before** deploying the Worker — otherwise the new `INSERT`/`SELECT` runs against a table without those columns and every submission fails. Keep `schema.sql` and the migrations in sync so a fresh setup and a migrated database end up identical.
 
 ```
 wrangler d1 execute caringowls-waitlist --remote --file=./migrations/0001_add_qualification_fields.sql
