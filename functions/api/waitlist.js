@@ -19,6 +19,7 @@ export async function onRequestPost(context) {
       recipientPhone,
       relationship,
       recipientUsesIphone,
+      planInterest,
       recipientTextsMessages,
       recipientJourneyStage,
       caregiverProximity,
@@ -46,6 +47,11 @@ export async function onRequestPost(context) {
       );
     }
 
+    // Deliberately NOT in the required list: a browser holding the HTML from
+    // before this field shipped would otherwise get a 400. Default instead.
+    const plan = planInterest?.trim() || "not-sure";
+    const isFullProtection = plan === "full-protection";
+
     // Basic email format check
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(caregiverEmail.trim())) {
       return Response.json(
@@ -59,9 +65,10 @@ export async function onRequestPost(context) {
       `INSERT INTO waitlist (
         caregiver_first_name, caregiver_last_name, caregiver_email,
         recipient_first_name, recipient_last_name, recipient_phone,
-        relationship, recipient_uses_iphone, recipient_texts_messages,
-        recipient_journey_stage, caregiver_proximity, consent_checked
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+        relationship, recipient_uses_iphone, plan_interest,
+        recipient_texts_messages, recipient_journey_stage,
+        caregiver_proximity, consent_checked
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
       .bind(
         caregiverFirstName.trim(),
@@ -72,6 +79,7 @@ export async function onRequestPost(context) {
         recipientPhone.trim(),
         relationship.trim(),
         recipientUsesIphone.trim(),
+        plan,
         recipientTextsMessages.trim(),
         recipientJourneyStage.trim(),
         caregiverProximity.trim(),
@@ -96,13 +104,15 @@ export async function onRequestPost(context) {
             caregiverFirstName.trim(),
             recipientFirstName.trim(),
             recipientPhone.trim(),
-            consentChecked
+            consentChecked,
+            isFullProtection
           ),
           text: buildConfirmationText(
             caregiverFirstName.trim(),
             recipientFirstName.trim(),
             recipientPhone.trim(),
-            consentChecked
+            consentChecked,
+            isFullProtection
           ),
         }),
       });
@@ -128,6 +138,7 @@ export async function onRequestPost(context) {
           recipientPhone: recipientPhone.trim(),
           relationship: relationship.trim(),
           iphone: labelValue(IPHONE_LABELS, recipientUsesIphone),
+          plan: labelValue(PLAN_LABELS, plan),
           texts: labelValue(TEXTS_LABELS, recipientTextsMessages),
           journey: labelValue(JOURNEY_LABELS, recipientJourneyStage),
           proximity: labelValue(PROXIMITY_LABELS, caregiverProximity),
@@ -144,7 +155,7 @@ export async function onRequestPost(context) {
             from: "Caring Owls <noreply@caringowls.com>",
             reply_to: notifyData.caregiverEmail,
             to: [notifyTo],
-            subject: `${notifyData.iphoneNo ? "[NON-IPHONE] " : ""}New Request Access — ${notifyData.caregiverFirstName} ${notifyData.caregiverLastName}`,
+            subject: `${notifyData.iphoneNo ? "[NON-IPHONE] " : ""}[${notifyData.plan}] New Request Access — ${notifyData.caregiverFirstName} ${notifyData.caregiverLastName}`,
             html: buildOperatorHtml(notifyData),
             text: buildOperatorText(notifyData),
           }),
@@ -180,6 +191,11 @@ export async function onRequestOptions() {
 }
 
 const IPHONE_LABELS = { yes: "Yes", no: "No" };
+const PLAN_LABELS = {
+  "quick-start": "Quick Start",
+  "full-protection": "Full Protection",
+  "not-sure": "Not sure yet",
+};
 const TEXTS_LABELS = { yes: "Yes", no: "No", sometimes: "Sometimes" };
 const JOURNEY_LABELS = {
   early: "Early changes",
@@ -204,6 +220,7 @@ Relationship: ${d.relationship}
 
 Qualification
 - Uses an iPhone: ${d.iphone}${d.iphoneNo ? "  [FLAG: Caring Owls supports iPhone only]" : ""}
+- Plan interest: ${d.plan}
 - Sends/receives texts: ${d.texts}
 - Journey stage: ${d.journey}
 - Caregiver proximity: ${d.proximity}
@@ -228,6 +245,7 @@ function buildOperatorHtml(d) {
   <h3 style="color: #44403c; margin-top: 1.5rem;">Qualification</h3>
   <ul>
     <li><strong>Uses an iPhone:</strong> ${d.iphone}${flag}</li>
+    <li><strong>Plan interest:</strong> ${d.plan}</li>
     <li><strong>Sends/receives texts:</strong> ${d.texts}</li>
     <li><strong>Journey stage:</strong> ${d.journey}</li>
     <li><strong>Caregiver proximity:</strong> ${d.proximity}</li>
@@ -237,10 +255,21 @@ function buildOperatorHtml(d) {
 </html>`;
 }
 
-function buildConfirmationText(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked) {
-  const smsText = consentChecked
-    ? `SMS Messaging: By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
-    : `SMS Messaging: You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at hello@caringowls.com.`;
+function buildConfirmationText(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked, isFullProtection) {
+  let smsText;
+  if (isFullProtection) {
+    smsText = consentChecked
+      ? `SMS Messaging: By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+      : `SMS Messaging: You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at hello@caringowls.com.`;
+  } else {
+    smsText = consentChecked
+      ? `SMS Messaging: You've agreed to receive text messages from Caring Owls about your request. We won't send, receive, or filter messages on ${recipientFirstName}'s number unless you choose Full Protection. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+      : `SMS Messaging: You have not yet opted in to text messages from Caring Owls. Either way, we won't send, receive, or filter messages on ${recipientFirstName}'s number unless you choose Full Protection. You can opt in at any time by replying to this email or contacting us at hello@caringowls.com.`;
+  }
+
+  const whatIsText = isFullProtection
+    ? `Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.`
+    : `Caring Owls filters calls for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard. Text filtering is part of our Full Protection plan.`;
 
   return `Hi ${caregiverFirstName},
 
@@ -252,7 +281,7 @@ Here's what happens next:
 - If you have questions, reply to this email or reach us at hello@caringowls.com.
 
 What is Caring Owls?
-Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.
+${whatIsText}
 
 ${smsText}
 
@@ -263,10 +292,21 @@ Vival Ventures LLC
 caringowls.com`;
 }
 
-function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked) {
-  const smsHtml = consentChecked
-    ? `<strong>SMS Messaging:</strong> By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
-    : `<strong>SMS Messaging:</strong> You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.`;
+function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipientPhone, consentChecked, isFullProtection) {
+  let smsHtml;
+  if (isFullProtection) {
+    smsHtml = consentChecked
+      ? `<strong>SMS Messaging:</strong> By signing up, you consented to Caring Owls sending and receiving SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+      : `<strong>SMS Messaging:</strong> You have not yet opted in to SMS messaging. If you'd like Caring Owls to send and receive SMS messages on behalf of ${recipientFirstName} at ${recipientPhone}, you can opt in at any time by replying to this email or contacting us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.`;
+  } else {
+    smsHtml = consentChecked
+      ? `<strong>SMS Messaging:</strong> You've agreed to receive text messages from Caring Owls about your request. We won't send, receive, or filter messages on ${recipientFirstName}'s number unless you choose Full Protection. Message frequency varies. Message and data rates may apply. Reply STOP to any message to opt out.`
+      : `<strong>SMS Messaging:</strong> You have not yet opted in to text messages from Caring Owls. Either way, we won't send, receive, or filter messages on ${recipientFirstName}'s number unless you choose Full Protection. You can opt in at any time by replying to this email or contacting us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.`;
+  }
+
+  const whatIsHtml = isFullProtection
+    ? `Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.`
+    : `Caring Owls filters calls for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard. Text filtering is part of our Full Protection plan.`;
 
   return `<!DOCTYPE html>
 <html>
@@ -284,7 +324,7 @@ function buildConfirmationHtml(caregiverFirstName, recipientFirstName, recipient
     <li>If you have questions, reply to this email or reach us at <a href="mailto:hello@caringowls.com" style="color: #b45309;">hello@caringowls.com</a>.</li>
   </ul>
   <h3 style="color: #44403c; margin-top: 1.5rem;">What is Caring Owls?</h3>
-  <p>Caring Owls filters calls and text messages for elderly individuals with cognitive decline, allowing only pre-approved contacts to reach them. As an authorized caregiver, you'll manage the approved contact list through our web dashboard.</p>
+  <p>${whatIsHtml}</p>
   <p style="font-size: 0.85rem; color: #78716c; margin-top: 2rem; border-top: 1px solid #e7e5e4; padding-top: 1rem;">
     ${smsHtml}
   </p>

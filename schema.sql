@@ -8,6 +8,7 @@ CREATE TABLE IF NOT EXISTS waitlist (
   recipient_phone TEXT NOT NULL,
   relationship TEXT NOT NULL,
   recipient_uses_iphone TEXT,
+  plan_interest TEXT,
   recipient_texts_messages TEXT,
   recipient_journey_stage TEXT,
   caregiver_proximity TEXT,

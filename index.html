@@ -10,14 +10,14 @@
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Caring Owls — Protecting Your Loved Ones from Phone Scams">
-    <meta property="og:description" content="Caring Owls filters calls and texts for elderly family members with cognitive decline, blocking scammers while keeping loved ones connected.">
+    <meta property="og:description" content="Caring Owls blocks scam calls to elderly family members with cognitive decline. Keep their number and their iPhone. Text filtering available on Full Protection.">
     <meta property="og:image" content="https://caringowls.com/assets/og-image.png">
     <meta property="og:url" content="https://caringowls.com/">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Caring Owls — Protecting Your Loved Ones from Phone Scams">
-    <meta name="twitter:description" content="Caring Owls filters calls and texts for elderly family members with cognitive decline, blocking scammers while keeping loved ones connected.">
+    <meta name="twitter:description" content="Caring Owls blocks scam calls to elderly family members with cognitive decline. Keep their number and their iPhone. Text filtering available on Full Protection.">
     <meta name="twitter:image" content="https://caringowls.com/assets/og-image.png">
-    <meta name="description" content="Caring Owls filters calls and texts for elderly family members with cognitive decline, blocking scammers while keeping loved ones connected.">
+    <meta name="description" content="Caring Owls blocks scam calls to elderly family members with cognitive decline. Keep their number and their iPhone. Text filtering available on Full Protection.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -240,6 +240,120 @@
             line-height: 1.6;
         }
 
+        /* PLANS */
+        .plans {
+            background: var(--white);
+            border-top: 1px solid var(--stone-200);
+            border-bottom: 1px solid var(--stone-200);
+        }
+        .plans-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .plans-inner h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 0.75rem;
+            letter-spacing: -0.01em;
+        }
+        .plans-inner > p {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            max-width: 580px;
+            margin-bottom: 3rem;
+            line-height: 1.7;
+        }
+        .plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        .plan-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--stone-50);
+            border: 1px solid var(--stone-200);
+            border-radius: 12px;
+            padding: 1.75rem;
+        }
+        .plan-card h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--stone-900);
+            margin-bottom: 0.75rem;
+        }
+        .plan-price {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--amber-700);
+            line-height: 1.2;
+        }
+        .plan-sub {
+            color: var(--stone-500);
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+        }
+        .plan-card ul {
+            list-style: none;
+            margin-bottom: 1.25rem;
+        }
+        .plan-card li {
+            position: relative;
+            padding-left: 1.5rem;
+            color: var(--stone-600);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            margin-bottom: 0.6rem;
+        }
+        .plan-card li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: var(--amber-700);
+            font-weight: 700;
+        }
+        .plan-fineprint {
+            font-size: 0.82rem;
+            color: var(--stone-500);
+            line-height: 1.55;
+            margin-bottom: 1.5rem;
+        }
+        .plan-cta {
+            display: block;
+            margin-top: auto;
+            text-align: center;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .plan-cta.primary {
+            background: var(--amber-700);
+            color: var(--white);
+        }
+        .plan-cta.primary:hover { background: var(--amber-800); transform: translateY(-1px); }
+        .plan-cta.secondary {
+            background: var(--white);
+            color: var(--amber-800);
+            border: 1px solid var(--amber-200);
+        }
+        .plan-cta.secondary:hover { background: var(--amber-50); transform: translateY(-1px); }
+        /* Selector must outrank `.plans-inner > p`, the section-subhead rule,
+           which would otherwise clamp this to 580px and knock it off centre. */
+        .plans-inner > p.plan-note {
+            max-width: none;
+            margin: 2rem 0 0;
+            text-align: center;
+            color: var(--stone-500);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+        .plan-note a { color: var(--amber-700); }
+
         /* FEATURES */
         .features {
             background: var(--stone-900);
@@ -295,6 +409,20 @@
             font-size: 0.92rem;
             line-height: 1.6;
         }
+        /* Same shape as .hero-badge, re-tinted for the dark features section. */
+        .plan-tag {
+            display: inline-block;
+            margin-left: 0.5rem;
+            vertical-align: middle;
+            background: rgba(251, 191, 36, 0.14);
+            color: var(--amber-200);
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 0.2rem 0.55rem;
+            border-radius: 100px;
+        }
 
         /* FOR FAMILIES */
         .families {
@@ -337,6 +465,42 @@
             color: var(--stone-600);
             font-size: 0.92rem;
             line-height: 1.6;
+        }
+
+        /* FAQ */
+        .faq {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+        .faq h2 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--stone-900);
+            margin-bottom: 3rem;
+            letter-spacing: -0.01em;
+        }
+        .faq-list {
+            display: grid;
+            gap: 1rem;
+            max-width: 760px;
+        }
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--stone-200);
+            border-radius: 12px;
+            padding: 1.5rem 1.75rem;
+        }
+        .faq-item h3 {
+            font-size: 1.02rem;
+            font-weight: 600;
+            color: var(--stone-900);
+            margin-bottom: 0.4rem;
+        }
+        .faq-item p {
+            color: var(--stone-600);
+            font-size: 0.95rem;
+            line-height: 1.65;
         }
 
         /* CTA */
@@ -411,7 +575,7 @@
         @media (max-width: 640px) {
             nav { padding: 1rem 1.25rem; }
             .hero { padding: 3rem 1.25rem 2.5rem; }
-            .problem-inner, .how, .features-inner, .families, .cta-inner {
+            .problem-inner, .how, .plans-inner, .features-inner, .families, .faq, .cta-inner {
                 padding: 3.5rem 1.25rem;
             }
             .nav-links { gap: 1.25rem; }
@@ -429,6 +593,7 @@
         </a>
         <div class="nav-links">
             <a href="#how-it-works">How It Works</a>
+            <a href="#plans">Plans</a>
             <a href="#features">Features</a>
             <a href="/get-started.html">Request Access</a>
         </div>
@@ -438,7 +603,7 @@
     <section class="hero">
         <div class="hero-badge">Protecting the ones you love</div>
         <h1>Protection without taking the phone away.</h1>
-        <p>Caring Owls gives your loved one a protected line where only people your family approves can reach them. Scam calls and texts fall away — their independence doesn't.</p>
+        <p>Only the people your family approves get through. Keep their number, keep their iPhone, no new device, and you can undo it in thirty seconds.</p>
         <a href="/get-started.html" class="hero-cta">Request Access</a>
     </section>
 
@@ -471,19 +636,57 @@
         <div class="steps">
             <div class="step">
                 <div class="step-number">1</div>
-                <h3>A fresh, protected line</h3>
-                <p>We set up a new protected Caring Owls number and move your family's calls and texts to it. It's a brand-new line, so the scammers who already have their old number don't reach it. Prefer to keep their current number? Porting is available with our concierge setup. If your loved one doesn't text, we can often protect their existing number without a port.</p>
+                <h3>Keep their number</h3>
+                <p>We give your family a private Caring Owls line. One dial code forwards your loved one's calls to it. Their number doesn't change, nobody has to be told anything, and turning it off is one more dial code. Want text protection too? Full Protection moves their number to us permanently.</p>
             </div>
             <div class="step">
                 <div class="step-number">2</div>
                 <h3>Set up approved contacts</h3>
-                <p>Family members add trusted contacts through a simple web dashboard. Only approved people can call or text your loved one.</p>
+                <p>Family members add trusted contacts through a simple web dashboard. Only approved people can call your loved one. On Full Protection, texts are filtered the same way.</p>
             </div>
             <div class="step">
                 <div class="step-number">3</div>
-                <h3>Scammers are blocked silently</h3>
-                <p>Unknown callers and texters are filtered before they ever reach the protected line. Family is notified and can review any blocked attempts.</p>
+                <h3>Unknown callers go to you, not them</h3>
+                <p>Anyone not on the approved list reaches a voicemail your family reviews from the dashboard. Approve a caller once and they ring through from then on. Your loved one never hears the scam call.</p>
             </div>
+        </div>
+    </section>
+
+    <!-- PLANS -->
+    <section class="plans" id="plans">
+        <div class="plans-inner">
+            <h2>Two ways to start</h2>
+            <p>Both include the app, the family dashboard, and real people helping you set it up.</p>
+            <div class="plan-grid">
+                <div class="plan-card">
+                    <h3>Quick Start</h3>
+                    <div class="plan-price">$39 / month</div>
+                    <div class="plan-sub">Cancel anytime. No setup fee.</div>
+                    <ul>
+                        <li>Keep their phone number</li>
+                        <li>Calls from unknown numbers go to a voicemail you review</li>
+                        <li>Calls they make are blocked or logged, your choice</li>
+                        <li>Keep iMessage, FaceTime, and their existing carrier</li>
+                        <li>About 15 minutes to set up</li>
+                    </ul>
+                    <p class="plan-fineprint">Texts are handled by your iPhone's built-in Filter Unknown Senders. Family review of texts requires Full Protection.</p>
+                    <a href="/get-started.html?plan=quick-start" class="plan-cta primary">Request Quick Start</a>
+                </div>
+                <div class="plan-card">
+                    <h3>Full Protection</h3>
+                    <div class="plan-price">$59 / month<br>+ $249 one-time setup</div>
+                    <div class="plan-sub">We move their number to Caring Owls.</div>
+                    <ul>
+                        <li>Everything in Quick Start</li>
+                        <li>Scam texts filtered, family reviews unknown senders</li>
+                        <li>Caring Owls becomes their phone and messaging app</li>
+                        <li>We handle the number transfer with you (takes 1&ndash;2 weeks)</li>
+                    </ul>
+                    <p class="plan-fineprint">Moving a number to Caring Owls means iMessage no longer works on that number &mdash; texts arrive in the Caring Owls app instead. FaceTime keeps working. A second line handles data and 911.</p>
+                    <a href="/get-started.html?plan=full-protection" class="plan-cta secondary">Request Full Protection</a>
+                </div>
+            </div>
+            <p class="plan-note">Not sure which fits? <a href="/get-started.html?plan=not-sure">Request access</a> and tell us about your situation &mdash; we'll recommend one.</p>
         </div>
     </section>
 
@@ -496,12 +699,12 @@
                 <div class="feature-card">
                     <div class="feature-icon">📞</div>
                     <h3>Call Filtering</h3>
-                    <p>Only approved contacts ring through. Unknown callers are sent to voicemail, which family can review and approve.</p>
+                    <p>Only approved contacts ring through. Unknown callers are sent to voicemail, which family can review and approve. Outbound calls to unapproved numbers are blocked in Strict mode or logged for review in Supervised mode.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">💬</div>
-                    <h3>Text Filtering</h3>
-                    <p>Scam texts never appear on your loved one's phone. Approved contacts can message normally. Unknown texts are held for family review.</p>
+                    <h3>Text Filtering <span class="plan-tag">Full Protection plan</span></h3>
+                    <p>Scam texts don't reach your loved one's phone. Approved contacts can message normally. Unknown texts are held for family review.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🦉</div>
@@ -511,7 +714,7 @@
                 <div class="feature-card">
                     <div class="feature-icon">📱</div>
                     <h3>Still a real iPhone</h3>
-                    <p>Calling and texting work the way they always have. No locked-down senior phone, no new interface to learn.</p>
+                    <p>Calling and texting work the way they always have. No locked-down senior phone, no new interface to learn. The built-in Phone app can't be removed from an iPhone, so we move it out of the way and make Caring Owls the app they reach for.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔔</div>
@@ -543,6 +746,33 @@
             <div class="family-card">
                 <h3>Share with family</h3>
                 <p>Invite siblings, spouses, or other caregivers to the dashboard. Everyone stays informed, everyone can help manage.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <h2>Questions families ask</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <h3>Does it work on Android?</h3>
+                <p>Not yet. Caring Owls runs on iPhone. The caregiver dashboard works in any browser.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Will my mom notice anything changed?</h3>
+                <p>On Quick Start, she keeps her number and her phone. Calls from people you've approved arrive like any normal call. She'll have a new app on her phone that she rarely needs to open.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can we undo it?</h3>
+                <p>Quick Start turns off with one dial code, and she's back to exactly how things were. Full Protection involves moving her number, which is reversible but takes time.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What about scam texts?</h3>
+                <p>Full Protection filters texts and lets your family review unknown senders. Quick Start relies on the iPhone's built-in Filter Unknown Senders, which hides stranger texts but doesn't show them to you.</p>
+            </div>
+            <div class="faq-item">
+                <h3>What if she finds the regular Phone app?</h3>
+                <p>It's still on the phone, moved out of sight. A determined person can find it. Caring Owls makes the protected path the easy one; it doesn't lock the phone down. If you need a fully locked-down phone, we'll tell you honestly that we're not the right fit.</p>
             </div>
         </div>
     </section>

@@ -10,14 +10,14 @@
     <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Request Access — Caring Owls">
-    <meta property="og:description" content="Sign up for Caring Owls and protect your loved one from phone scams.">
+    <meta property="og:description" content="Request access to Caring Owls and protect your loved one from scam calls. Keep their number, or add text filtering with Full Protection.">
     <meta property="og:image" content="https://caringowls.com/assets/og-image.png">
     <meta property="og:url" content="https://caringowls.com/get-started.html">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Request Access — Caring Owls">
-    <meta name="twitter:description" content="Sign up for Caring Owls and protect your loved one from phone scams.">
+    <meta name="twitter:description" content="Request access to Caring Owls and protect your loved one from scam calls. Keep their number, or add text filtering with Full Protection.">
     <meta name="twitter:image" content="https://caringowls.com/assets/og-image.png">
-    <meta name="description" content="Sign up for Caring Owls and protect your loved one from phone scams.">
+    <meta name="description" content="Request access to Caring Owls and protect your loved one from scam calls. Keep their number, or add text filtering with Full Protection.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -318,7 +318,7 @@
 
     <div class="page-header">
         <h1>Request Access</h1>
-        <p>Tell us about your family and we'll help you set up protection for your loved one.</p>
+        <p>We're onboarding a small number of families this fall. Tell us about yours and we'll reach out within a few days.</p>
     </div>
 
     <form id="signup-form" class="form-container" novalidate>
@@ -378,6 +378,15 @@
                 <p class="field-note" id="cr-iphone-note">Caring Owls currently supports iPhone only. Leave your email and we'll let you know when that changes.</p>
             </div>
             <div class="form-group">
+                <label for="cr-plan">Which plan are you interested in?</label>
+                <select id="cr-plan" name="cr-plan" required>
+                    <option value="" disabled selected>Select an option</option>
+                    <option value="quick-start">Quick Start &mdash; keep their number, calls only ($39/mo)</option>
+                    <option value="full-protection">Full Protection &mdash; we move their number, calls and texts ($59/mo + setup)</option>
+                    <option value="not-sure">Not sure yet</option>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="cr-texts">Does your loved one send and receive text messages?</label>
                 <select id="cr-texts" name="cr-texts" required>
                     <option value="" disabled selected>Select an option</option>
@@ -410,7 +419,7 @@
             <h2>Consent &amp; Authorization</h2>
             <div class="consent-box">
                 <div class="consent-check">
-                    <input type="checkbox" id="consent" name="consent">
+                    <input type="checkbox" id="consent" name="consent" required>
                     <label for="consent">
                         I confirm that I am an authorized caregiver for the care recipient named above and have the authority to manage their communications. I consent to Caring Owls contacting me about setting up SMS communication filtering for the care recipient named above. I also consent to Caring Owls sending and receiving SMS text messages on behalf of the care recipient at the phone number provided. Message frequency varies. Message and data rates may apply. Reply STOP to opt out at any time. Reply HELP for help. I have read and agree to the <a href="/terms.html" target="_blank">Terms of Use</a> and <a href="/privacy.html" target="_blank">Privacy Policy</a>.
                     </label>
@@ -476,6 +485,7 @@
                 recipientPhone: document.getElementById('cr-phone').value.replace(/\D/g, ''),
                 relationship: document.getElementById('cr-relationship').value,
                 recipientUsesIphone: document.getElementById('cr-iphone').value,
+                planInterest: document.getElementById('cr-plan').value,
                 recipientTextsMessages: document.getElementById('cr-texts').value,
                 recipientJourneyStage: document.getElementById('cr-journey').value,
                 caregiverProximity: document.getElementById('cg-proximity').value,
@@ -512,6 +522,16 @@
             document.getElementById('cr-iphone-note').style.display =
                 this.value === 'no' ? 'block' : 'none';
         });
+
+        // Pre-select the plan from ?plan= when the visitor arrives from a
+        // pricing card. Allowlisted, so a junk value leaves the placeholder
+        // selected and `required` still fires.
+        (function () {
+            var plan = new URLSearchParams(window.location.search).get('plan');
+            if (['quick-start', 'full-protection', 'not-sure'].indexOf(plan) !== -1) {
+                document.getElementById('cr-plan').value = plan;
+            }
+        })();
     </script>
 
 </body>

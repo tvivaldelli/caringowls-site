@@ -13,7 +13,7 @@ Marketing and legal pages for Caring Owls — a communication filtering service 
 
 ## Pages
 - `index.html` — Landing page
-- `get-started.html` — Waitlist signup form (POSTs to `/api/waitlist`)
+- `get-started.html` — Waitlist signup form (POSTs to `/api/waitlist`). Also reachable at `/request-access` via `_redirects`. Accepts `?plan=quick-start|full-protection|not-sure` to pre-select the plan field
 - `terms.html` — Terms of Use
 - `privacy.html` — Privacy Policy
 
@@ -32,6 +32,7 @@ Marketing and legal pages for Caring Owls — a communication filtering service 
 - `migrations/` — incremental D1 schema changes, applied in filename order
 - `assets/` — brand imagery: header `logo.png` (transparent), favicons, `apple-touch-icon.png`, PWA icons, `og-image.png`. `favicon.ico` lives at repo root
 - `wrangler.toml` — D1 database binding config
+- `_redirects` — Cloudflare Pages redirect rules. Query strings are preserved across the redirect (verified locally), so `?plan=` survives `/request-access` → `/get-started.html`
 
 ## Database Migrations
 The live `caringowls-waitlist` D1 table already holds data, so schema changes ship as incremental migrations in `migrations/`, not by re-running `schema.sql`. Any Worker change that reads or writes new columns requires running the migration against the **remote** database **before** deploying the Worker — otherwise the new `INSERT`/`SELECT` runs against a table without those columns and every submission fails. Keep `schema.sql` and the migrations in sync so a fresh setup and a migrated database end up identical.
