@@ -122,6 +122,12 @@
             margin: 0 auto 2.5rem;
             line-height: 1.7;
         }
+        /* Selector must outrank `.hero p`, the hero-subhead rule. */
+        .hero p.hero-audience {
+            font-weight: 600;
+            color: var(--amber-800);
+            margin: -0.5rem auto 1.25rem;
+        }
         .hero-cta {
             display: inline-block;
             background: var(--amber-700);
@@ -603,7 +609,8 @@
     <section class="hero">
         <div class="hero-badge">Protecting the ones you love</div>
         <h1>Protection without taking the phone away.</h1>
-        <p>Only the people your family approves get through. Keep their number, keep their iPhone, no new device, and you can undo it in thirty seconds.</p>
+        <p class="hero-audience">For parents still living at home.</p>
+        <p>Only the people your family approves get through. They keep their number, their iPhone, and their independence. No new device, and you can undo it in thirty seconds.</p>
         <a href="/get-started.html" class="hero-cta">Request Access</a>
     </section>
 
@@ -656,11 +663,11 @@
     <section class="plans" id="plans">
         <div class="plans-inner">
             <h2>Two ways to start</h2>
-            <p>Both include the app, the family dashboard, and real people helping you set it up.</p>
+            <p>Both include the app, the family dashboard, and real people helping you set it up. Built so they keep a sense of normalcy and independence.</p>
             <div class="plan-grid">
                 <div class="plan-card">
                     <h3>Quick Start</h3>
-                    <div class="plan-price">$39 / month</div>
+                    <div class="plan-price">$49 / month</div>
                     <div class="plan-sub">Cancel anytime. No setup fee.</div>
                     <ul>
                         <li>Keep their phone number</li>
@@ -754,6 +761,14 @@
     <section class="faq" id="faq">
         <h2>Questions families ask</h2>
         <div class="faq-list">
+            <div class="faq-item">
+                <h3>Should I take away her phone?</h3>
+                <p>Most families who've been through this say no &mdash; it's her last link to the outside world. The answer is usually to limit who can reach her and who she can reach, without taking the phone. That's what Caring Owls does, and you manage it from your own phone.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Can't I just set up her iPhone to only allow contacts?</h3>
+                <p>You can, and for some families that's enough. What you can't do from her Settings is see who tried to call, approve a new caller from your own phone, get alerted when she dials a stranger, or review a voicemail before deciding. Caring Owls is that layer.</p>
+            </div>
             <div class="faq-item">
                 <h3>Does it work on Android?</h3>
                 <p>Not yet. Caring Owls runs on iPhone. The caregiver dashboard works in any browser.</p>
