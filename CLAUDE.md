@@ -64,3 +64,18 @@ wrangler d1 execute caringowls-waitlist --remote --file=./migrations/0001_add_qu
 - Form validation exists in 3 places: HTML attributes, frontend JS (`get-started.html` `<script>`), and backend (`functions/api/waitlist.js`) — changes to validation rules must update all layers
 - Confirmation email templates (HTML + plaintext) live in `functions/api/waitlist.js`, not in separate template files
 - Phone numbers are stored as digits-only in D1; frontend formats for display with `(XXX) XXX-XXXX`
+
+## TASKS.md
+The task list lives in the backend repo at
+../CaringOwls-Backend/docs/plans/TASKS.md, on main.
+At session close:
+1. Check git -C ../CaringOwls-Backend branch --show-current and
+   status. Continue only if on main with no modified or staged
+   tracked files (untracked files are fine). Otherwise list the
+   updates in your summary and stop.
+2. git -C ../CaringOwls-Backend pull --ff-only
+3. Edit TASKS.md: check off what shipped, add what was discovered,
+   move items that changed sections, strike through obsolete lines.
+   Never reorganize or delete.
+4. Commit only that file in the backend repo:
+   "docs(tasks): <one-line summary>". Don't push.
