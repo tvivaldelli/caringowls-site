@@ -473,6 +473,7 @@
                 return;
             }
 
+            var idleLabel = submitBtn.textContent;
             submitBtn.disabled = true;
             submitBtn.textContent = 'Submitting...';
 
@@ -508,12 +509,12 @@
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
                     submitBtn.disabled = false;
-                    submitBtn.textContent = 'Request Access';
+                    submitBtn.textContent = idleLabel;
                     document.getElementById('form-error').style.display = 'block';
                 }
             } catch (err) {
                 submitBtn.disabled = false;
-                submitBtn.textContent = 'Request Access';
+                submitBtn.textContent = idleLabel;
                 document.getElementById('form-error').style.display = 'block';
             }
         });
@@ -539,8 +540,10 @@
         // its JSON payload field by field, so hidden inputs would be dropped.
         (function () {
             if (new URLSearchParams(window.location.search).get('paid') !== '1') return;
+            document.querySelector('.page-header h1').textContent = 'Finish your setup details';
             document.getElementById('intro-text').textContent =
                 "Thanks, you're in. We'll call within one business day to schedule setup. Tell us a bit more below so we're ready.";
+            document.querySelector('#signup-form .submit-btn').textContent = 'Send details';
             document.getElementById('cr-plan').value = 'quick-start';
         })();
     </script>
