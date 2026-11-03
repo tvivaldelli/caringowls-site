@@ -318,7 +318,7 @@
 
     <div class="page-header">
         <h1>Request Access</h1>
-        <p>We're onboarding a small number of families this fall. Tell us about yours and we'll reach out within a few days.</p>
+        <p id="intro-text">We're onboarding a small number of families this fall. Tell us about yours and we'll reach out within a few days.</p>
     </div>
 
     <form id="signup-form" class="form-container" novalidate>
@@ -531,6 +531,17 @@
             if (['quick-start', 'full-protection', 'not-sure'].indexOf(plan) !== -1) {
                 document.getElementById('cr-plan').value = plan;
             }
+        })();
+
+        // Returning from Stripe checkout (?paid=1): confirm the purchase and
+        // preselect Quick Start, the only plan sold through Stripe. paid and
+        // session_id are not sent to the backend: the submit handler builds
+        // its JSON payload field by field, so hidden inputs would be dropped.
+        (function () {
+            if (new URLSearchParams(window.location.search).get('paid') !== '1') return;
+            document.getElementById('intro-text').textContent =
+                "Thanks, you're in. We'll call within one business day to schedule setup. Tell us a bit more below so we're ready.";
+            document.getElementById('cr-plan').value = 'quick-start';
         })();
     </script>
 
