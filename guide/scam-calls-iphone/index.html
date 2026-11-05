@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scam calls on a parent's iPhone: the free setting, and what it misses | Caring Owls</title>
+    <meta name="description" content="Every iPhone has a free setting that blocks most scam calls. Here's how to turn it on, what to save first, and the gaps families run into.">
+    <link rel="canonical" href="https://caringowls.com/guide/scam-calls-iphone/">
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Scam calls on a parent's iPhone: the free setting, and what it misses">
+    <meta property="og:description" content="Every iPhone has a free setting that blocks most scam calls. Here's how to turn it on, what to save first, and the gaps families run into.">
+    <meta property="og:image" content="https://caringowls.com/assets/og-image.png">
+    <meta property="og:url" content="https://caringowls.com/guide/scam-calls-iphone/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Scam calls on a parent's iPhone: the free setting, and what it misses">
+    <meta name="twitter:description" content="Every iPhone has a free setting that blocks most scam calls. Here's how to turn it on, what to save first, and the gaps families run into.">
+    <meta name="twitter:image" content="https://caringowls.com/assets/og-image.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --amber-700: #b45309;
+            --stone-50: #fafaf9;
+            --stone-200: #e7e5e4;
+            --stone-500: #78716c;
+            --stone-600: #57534e;
+            --stone-800: #292524;
+            --stone-900: #1c1917;
+            --white: #ffffff;
+            --font-display: 'DM Serif Display', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: var(--font-body);
+            color: var(--stone-800);
+            background: var(--stone-50);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--stone-800);
+        }
+        .nav-logo img { height: 36px; width: auto; display: block; }
+        .nav-logo span {
+            font-family: var(--font-display);
+            font-size: 1.35rem;
+            letter-spacing: -0.01em;
+        }
+        /* Long-form reading: narrower column and larger text than the legal pages. */
+        .content {
+            max-width: calc(680px + 4rem);
+            margin: 0 auto;
+            padding: 3rem 2rem 5rem;
+        }
+        .content h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4.5vw, 2.3rem);
+            line-height: 1.2;
+            color: var(--stone-900);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+        .content .updated {
+            color: var(--stone-500);
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+        }
+        .content h2 {
+            font-family: var(--font-display);
+            font-size: 1.45rem;
+            line-height: 1.3;
+            color: var(--stone-900);
+            margin-top: 2.75rem;
+            margin-bottom: 0.75rem;
+        }
+        .content p,
+        .content ul,
+        .content ol {
+            color: var(--stone-600);
+            font-size: 1.05rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+        .content ul,
+        .content ol { padding-left: 1.5rem; }
+        .content li { margin-bottom: 0.5rem; }
+        .content strong { color: var(--stone-800); }
+        .content a { color: var(--amber-700); }
+        .content .about {
+            margin-top: 3rem;
+            padding-top: 0.25rem;
+            border-top: 1px solid var(--stone-200);
+        }
+        footer {
+            border-top: 1px solid var(--stone-200);
+            padding: 2.5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .footer-left { color: var(--stone-500); font-size: 0.85rem; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .footer-links a {
+            color: var(--stone-500);
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-links a:hover { color: var(--stone-800); }
+
+        @media (max-width: 640px) {
+            nav { padding: 1rem 1.25rem; }
+            .content { padding: 2rem 1.25rem 3.5rem; }
+            footer { padding: 2rem 1.25rem; }
+        }
+
+        /* Print as a clean handout: no chrome, black on white. */
+        @media print {
+            nav, footer { display: none; }
+            * {
+                color: #000 !important;
+                background: #fff !important;
+                box-shadow: none !important;
+            }
+            body { font-size: 11pt; }
+            .content { max-width: none; padding: 0; }
+            .content p, .content ul, .content ol { font-size: 11pt; line-height: 1.5; }
+            .content h1 { font-size: 20pt; }
+            .content h2 { font-size: 14pt; margin-top: 1.5rem; break-after: avoid; page-break-after: avoid; }
+            .content li, .content p { break-inside: avoid; page-break-inside: avoid; }
+            /* Both links already show their target as text, so no URL suffix is needed. */
+            .content a { text-decoration: none; }
+            .content .about { border-top: 1px solid #000; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="nav-logo">
+            <img src="/assets/logo.png" alt="Caring Owls" width="28" height="36">
+            <span>Caring Owls&trade;</span>
+        </a>
+    </nav>
+
+    <main class="content">
+        <article>
+            <h1>Scam calls on a parent's iPhone: the free setting, and what it misses</h1>
+            <p class="updated">Last updated: November 2026</p>
+
+            <p>Every iPhone has a free setting that sends calls from unknown numbers straight to voicemail. It stops most scam calls in one tap, and it has three gaps you should know about before you rely on it.</p>
+
+            <h2>1. Turn on Silence Unknown Callers</h2>
+            <p>The path depends on the iPhone's software version. Check it under Settings &gt; General &gt; About.</p>
+            <ul>
+                <li>iOS 18 and earlier: Settings &gt; Apps &gt; Phone &gt; Silence Unknown Callers, switch it on. (On iOS 17 and older, Settings &gt; Phone.)</li>
+                <li>iOS 26: Settings &gt; Apps &gt; Phone &gt; Screen Unknown Callers, then pick Silence. The other option, Ask Reason for Calling, makes callers explain themselves before the phone rings; it confuses many older callers, so Silence is the safer choice for a parent with memory loss. On the same screen, under Call Filtering, turn on Spam so the carrier's fraud detection blocks known scam numbers too.</li>
+            </ul>
+            <p>Once it's on, any number not in Contacts goes to voicemail without ringing. The phone still allows numbers your parent has called recently and numbers Siri finds in their mail or texts. The call shows up in Recents, so you can see it was silenced. If your parent ever dials 911, the setting pauses for 24 hours so callbacks get through.</p>
+
+            <h2>2. Before you turn it on, save these numbers</h2>
+            <p>The setting only lets through numbers saved in Contacts, so do this first or your parent will miss real calls on day one.</p>
+            <ul>
+                <li>Family, close friends, neighbors, and anyone who checks in by phone</li>
+                <li>Every doctor's office, including the main switchboard. Call each office and ask what numbers they call from; many use several, and some use a different number for appointment reminders.</li>
+                <li>The pharmacy, including its automated refill line</li>
+                <li>The building front desk, care facility, or home care agency</li>
+                <li>The bank's fraud department (the number printed on the back of the card, not one from a text)</li>
+                <li>Any contractor, cleaner, or driver who comes to the house regularly</li>
+            </ul>
+            <p>Save each one in Contacts with a name your parent will recognize, like "Dr. Patel's office" rather than "Northwest Medical Group."</p>
+
+            <h2>3. What the setting misses</h2>
+            <p>Three gaps come up again and again with families who use it.</p>
+            <p><strong>Real calls from new numbers get silenced.</strong> A hospital calling back after a test, a specialist's office you haven't saved yet, a pharmacy using a new line. The call goes to voicemail, and a parent with memory loss often won't check voicemail or won't act on it. This is the most common reason families turn the setting back off.</p>
+            <p><strong>You can't see what was silenced unless you have the phone in your hand.</strong> Recents and voicemail live on the device. If you're across town or across the country, you won't know a doctor called until someone looks.</p>
+            <p><strong>It does nothing about outgoing calls or texts.</strong> If a scammer leaves a voicemail with a callback number, your parent can still dial it. The fix for that is Settings &gt; Screen Time &gt; Communication Limits &gt; During Allowed Screen Time &gt; Contacts Only, which blocks outgoing calls and texts to anyone not in Contacts. Set a Screen Time passcode your parent doesn't know, and turn on iCloud Contacts first or the limit won't apply. Start with the inbound setting alone and add this only if you see your parent returning calls to unknown numbers; it also blocks them from calling a new doctor's office or a pharmacy that isn't saved yet. Scam texts are a separate setting: Settings &gt; Apps &gt; Messages &gt; Filter Unknown Senders (called "Unknown &amp; Spam" on newer versions), which moves texts from unknown numbers into a separate list without an alert.</p>
+
+            <h2>4. A ten-minute weekly habit</h2>
+            <p>The setting works if someone reviews what it caught. Pick a day and do this with your parent, in person or over a video call while they hold the phone.</p>
+            <ol>
+                <li>Open Recents and look for calls marked silenced. On iOS 26 they sit in a separate Unknown Callers list inside Recents, along with their voicemails, so tap into that list. Any real caller goes into Contacts right then.</li>
+                <li>Listen to the voicemails together. Call back the real ones while you're on the line. Delete the rest, so a scam voicemail isn't sitting there with a callback number.</li>
+                <li>Check the filtered texts list the same way.</li>
+                <li>Ask whether anyone has called about Medicare, a grandchild in trouble, a prize, or a package. Those four scripts account for most of the calls that get through.</li>
+            </ol>
+            <p>If the phone is a shared responsibility, write down who does the review and when. The gap that catches families is nobody being sure whose job it was.</p>
+
+            <h2>5. What about AI call-screening apps?</h2>
+            <p>A newer option forwards your parent's calls to an AI that answers unknown callers, asks why they're calling, and decides in a few seconds whether to put them through. For a parent who can still hang up on a pushy stranger, that can work well, and it saves the family from reviewing anything.</p>
+            <p>For a parent with memory loss, the risk is the wrong "pass." A caller who says "this is Dr. Patterson's office" sounds legitimate, and if the AI connects them, your parent is now talking to a stranger live. Before you trust one of these, ask four questions:</p>
+            <ul>
+                <li>What happens when a caller simply says they're from a doctor's office?</li>
+                <li>Does one passed call give that number permanent access, with no one in the family approving it?</li>
+                <li>When you call, does your parent's phone show your name, or "Unknown Caller"?</li>
+                <li>Does your parent's phone end up holding your own login and password?</li>
+            </ul>
+            <p>Any product should be able to answer those plainly. If the answer to the second or third is yes, think about whether that's acceptable for your parent.</p>
+
+            <h2>6. Not an iPhone?</h2>
+            <ul>
+                <li>Android: most phones have a similar setting under Phone app &gt; Settings &gt; Blocked numbers or Caller ID &amp; spam, with an option to block or silence unknown callers. The menu name varies by brand.</li>
+                <li>Flip phone: usually no filtering at all. Ask the carrier about call blocking on the line itself; Verizon, AT&amp;T, and T-Mobile each offer a free scam-blocking service.</li>
+                <li>Landline: two paid services, Community Phone and teleCalm, replace the home phone line with one the family controls remotely. They cost $45 to $90 a month and are the right answer for a landline-only household.</li>
+            </ul>
+
+            <section class="about">
+                <h2>About this guide</h2>
+                <p>Tom Vivaldelli wrote this after setting up his mother-in-law's phone and talking with families and care managers in the Chicago area about what works. If something here is wrong or missing, tell him at <a href="mailto:tom@caringowls.com">tom@caringowls.com</a>.</p>
+                <p>Full disclosure: he's building Caring Owls (<a href="/">caringowls.com</a>), a service that fixes the second gap above by letting family review silenced calls and voicemails from their own phones. Nothing in this guide requires it. The free setting is the right first step for most families.</p>
+            </section>
+        </article>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <div class="footer-left">&copy; 2026 Vival Ventures LLC. All rights reserved.</div>
+            <div class="footer-links">
+                <a href="/privacy.html">Privacy Policy</a>
+                <a href="/terms.html">Terms of Use</a>
+                <a href="/guide/scam-calls-iphone/">Family guide</a>
+                <a href="mailto:hello@caringowls.com">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
