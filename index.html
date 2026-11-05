@@ -86,6 +86,8 @@
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--stone-900); }
+        /* Keep logo text and links on one line at every width. */
+        .nav-logo span, .nav-links a { white-space: nowrap; }
 
         /* HERO */
         .hero {
@@ -588,6 +590,7 @@
             }
             .nav-links { gap: 1.25rem; }
             .nav-links a { font-size: 0.85rem; }
+            .nav-links .nav-link-secondary { display: none; }
         }
     </style>
 </head>
@@ -600,10 +603,10 @@
             <span>Caring Owls&trade;</span>
         </a>
         <div class="nav-links">
-            <a href="#how-it-works">How It Works</a>
+            <a href="#how-it-works" class="nav-link-secondary">How It Works</a>
             <a href="#plans">Plans</a>
-            <a href="#features">Features</a>
-            <a href="/get-started.html">Request Access</a>
+            <a href="#faq">FAQ</a>
+            <a href="/get-started.html" class="nav-link-secondary">Request Access</a>
         </div>
     </nav>
 

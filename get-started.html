@@ -81,6 +81,8 @@
             transition: color 0.2s;
         }
         .nav-links a:hover { color: var(--stone-900); }
+        /* Keep logo text and links on one line at every width. */
+        .nav-logo span, .nav-links a { white-space: nowrap; }
 
         .page-header {
             max-width: 600px;
@@ -295,6 +297,7 @@
             nav { padding: 1rem 1.25rem; }
             .nav-links { gap: 1.25rem; }
             .nav-links a { font-size: 0.85rem; }
+            .nav-links .nav-link-secondary { display: none; }
             .page-header { padding: 2rem 1.25rem 0.75rem; }
             .form-container { padding: 1.5rem 1.25rem 4rem; }
             .form-row { grid-template-columns: 1fr; }
@@ -310,9 +313,10 @@
             <span>Caring Owls&trade;</span>
         </a>
         <div class="nav-links">
-            <a href="/#how-it-works">How It Works</a>
-            <a href="/#features">Features</a>
-            <a href="mailto:hello@caringowls.com">Contact</a>
+            <a href="/#how-it-works" class="nav-link-secondary">How It Works</a>
+            <a href="/#plans">Plans</a>
+            <a href="/#faq">FAQ</a>
+            <a href="mailto:hello@caringowls.com" class="nav-link-secondary">Contact</a>
         </div>
     </nav>
 
