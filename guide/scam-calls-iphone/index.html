@@ -24,7 +24,10 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            --amber-50: #fffbeb;
+            --amber-200: #fde68a;
             --amber-700: #b45309;
+            --amber-800: #92400e;
             --stone-50: #fafaf9;
             --stone-200: #e7e5e4;
             --stone-500: #78716c;
@@ -109,6 +112,24 @@
             padding-top: 0.25rem;
             border-top: 1px solid var(--stone-200);
         }
+        /* Quiet secondary button, same look as .plan-cta.secondary on index. */
+        .print-button {
+            display: inline-block;
+            margin: -1rem 0 2rem;
+            padding: 0.5rem 1rem;
+            font: inherit;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--amber-800);
+            background: var(--white);
+            border: 1px solid var(--amber-200);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .print-button:hover { background: var(--amber-50); }
+        .print-button:focus-visible { outline: 2px solid var(--amber-700); outline-offset: 2px; }
+        .print-only { display: none; }
         footer {
             border-top: 1px solid var(--stone-200);
             padding: 2.5rem 2rem;
@@ -155,6 +176,8 @@
             /* Both links already show their target as text, so no URL suffix is needed. */
             .content a { text-decoration: none; }
             .content .about { border-top: 1px solid #000; }
+            .print-button { display: none; }
+            .content .print-only { display: block; margin-top: 1.5rem; font-size: 10pt; }
         }
     </style>
 </head>
@@ -171,6 +194,7 @@
         <article>
             <h1>Scam calls on a parent's iPhone: the free setting, and what it misses</h1>
             <p class="updated">Last updated: November 2026</p>
+            <button type="button" class="print-button" onclick="window.print()">Print or save as PDF</button>
 
             <p>Every iPhone has a free setting that sends calls from unknown numbers straight to voicemail. It stops most scam calls in one tap, and it has three gaps you should know about before you rely on it.</p>
 
@@ -232,6 +256,7 @@
                 <h2>About this guide</h2>
                 <p>Tom Vivaldelli wrote this after setting up his mother-in-law's phone and talking with families and care managers in the Chicago area about what works. If something here is wrong or missing, tell him at <a href="mailto:tom@caringowls.com">tom@caringowls.com</a>.</p>
                 <p>Full disclosure: he's building Caring Owls (<a href="/">caringowls.com</a>), a service that fixes the second gap above by letting family review silenced calls and voicemails from their own phones. Nothing in this guide requires it. The free setting is the right first step for most families.</p>
+                <p class="print-only">Online version, updated as iPhone settings change: caringowls.com/guide/scam-calls-iphone</p>
             </section>
         </article>
     </main>
